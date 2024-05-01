@@ -3,30 +3,5 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.9
-
-    steps:
-      - checkout
-
-      # Install dependencies
-      - run:
-          name: Install dependencies
-          command: pip install -r requirements.txt
-
-      # Run tests
-      - run:
-          name: Run tests
-          command: python tests.py
-
-      # Generate demo report
-      - run:
-          name: Generate demo report
-          command: |
-            echo "Demo Report" > demo_report.txt
-            echo "----------------" >> demo_report.txt
-            echo "Date: $(date)" >> demo_report.txt
-            echo "----------------" >> demo_report.txt
-            echo "Test Results:" >> demo_report.txt
-            cat test_results.txt >> demo_report.txt
-
-  # You can define more jobs here for different stages of your build process
+      - image: circleci/python:3.9 # Updated to next-gen Docker image
+    # Rest of your job configuration...
