@@ -1,43 +1,32 @@
-# Couldn't automatically generate a config from your source code.
-# This is a generic template to serve as a base for your custom config
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
+
 jobs:
-  test:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      # Replace this with a real test runner invocation
-      - run:
-          name: Run tests
-          command: echo 'replace me with real tests!' && false
   build:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/python:3.8
+
     steps:
       - checkout
-      # Replace this with steps to build a package, or executable
+
+      # Install dependencies
       - run:
-          name: Build an artifact
-          command: touch example.txt
-      - store_artifacts:
-          path: example.txt
-  deploy:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
+          name: Install dependencies
+          command: pip install -r requirements.txt
+
+      # Run tests
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-workflows:
-  example:
-    jobs:
-      - test
-      - build:
-          requires:
-            - test
-      - deploy:
-          requires:
-            - test
+          name: Run tests
+          command: python tests.py
+
+      # Generate demo report
+      - run:
+          name: Generate demo report
+          command: |
+            echo "Demo Report" > demo_report.txt
+            echo "----------------" >> demo_report.txt
+            echo "Date: $(date)" >> demo_report.txt
+            echo "----------------" >> demo_report.txt
+            echo "Test Results:" >> demo_report.txt
+            cat test_results.txt >> demo_report.txt
+
+  # You can define more jobs here for different stages of your build process
